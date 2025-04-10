@@ -1,8 +1,8 @@
 package dto;
 
 public class User {
-    private int id;
-    private String name;
+
+    private String username;
     private String email;
     private String checkin;
     private String checkout;
@@ -12,9 +12,9 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, String email, String checkin, String checkout, String roomtype ) {
-        this.id = id;
-        this.name = name;
+    public User( String username, String email, String checkin, String checkout, String roomtype ) {
+
+        this.username = username;
         this.email = email;
         this.checkin = checkin;
         this.checkout = checkout;
@@ -22,20 +22,13 @@ public class User {
 
     }
 
-    public int getId() {
-        return id;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
