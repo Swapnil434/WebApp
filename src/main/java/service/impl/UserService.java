@@ -2,7 +2,6 @@ package service.impl;
 
 import dto.User;
 import dbconnection.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,23 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    public List<dto.User> getUsers() {
-        List<dto.User> users = new ArrayList<>();
-        String sql = "SELECT * FROM public.HMC";
 
-        try (Connection conn = dbconnection.DBConnection.getConnection();
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM public.\"HMC\"";
+
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                users.add(new User(
-                        rs.getInt("id"),
+                User user = new User(
                         rs.getString("username"),
                         rs.getString("email"),
                         rs.getString("checkin"),
                         rs.getString("checkout"),
                         rs.getString("roomtype")
-                ));
+                );
+                users.add(user);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,23 +34,24 @@ public class UserService {
         return users;
     }
 
-    public void addUser(String username, String email, String checkin, String checkout, String roomtype) {
-        String sql =  "INSERT INTO \"user\" ( username, email, checkin, checkout, roomtype) VALUES ( ?, ?, ?, ?, ?)";
+    public boolean addUser(User user) {
+        String sql = "INSERT INTO public.\"HMC\" (username, email, checkin, checkout, roomtype) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = dbconnection.DBConnection.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, username);
-            stmt.setString(2, email);
-            stmt.setString(3, checkin);
-            stmt.setString(4, checkout);
-            stmt.setString(5, roomtype);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getCheckin());
+            stmt.setString(4, user.getCheckout());
+            stmt.setString(5, user.getRoomtype());
 
-            stmt.executeUpdate();
-            System.out.println("User inserted successfully!");
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
-       }
+}
