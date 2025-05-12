@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const name = document.getElementById("name").value.trim();
+        const username = document.getElementById("username").value.trim();
         const email = document.getElementById("email").value.trim();
         const checkin = document.getElementById("checkin").value;
         const checkout = document.getElementById("checkout").value;
-        const roomType = document.getElementById("roomType").value;
+        const roomtype = document.getElementById("roomtype").value;
 
-        if (!name || !email || !checkin || !checkout || !roomType) {
+        if (!username || !email || !checkin || !checkout || !roomtype) {
             message.textContent = "Please fill in all fields.";
             message.style.color = "red";
             return;
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        message.textContent = `Booking confirmed for ${name} in a ${roomType} from ${checkin} to ${checkout}.`;
+        message.textContent = `Booking confirmed for ${username} in a ${roomtype} from ${checkin} to ${checkout}.`;
         message.style.color = "green";
     });
 });
